@@ -5,7 +5,7 @@ class PopupChallenge {
   constructor() {
     this.maxPopups = 10;
     this.initialMaxPopups = 10; // Garder la limite initiale
-    this.popupInterval = 1000; // 0.5 secondes
+    this.popupInterval = 2000; // 0.5 secondes
     this.activePopups = [];
     this.popupCount = 0;
     this.closedCount = 0;
@@ -250,6 +250,15 @@ class PopupChallenge {
 
       console.log(`✓ Popup fermé ! (${this.closedCount} fermés, ${this.activePopups.length} actifs)`);
 
+      // Vérifier si tous les popups sont fermés et que le minimum est atteint
+      if (this.activePopups.length === 0 && this.closedCount >= this.initialMaxPopups) {
+        // Tous les popups sont fermés, valider l'épreuve
+        if (this.intervalId) {
+          clearInterval(this.intervalId);
+        }
+        this.onAllPopupsClosed();
+      }
+
       // Ne pas créer de popup immédiatement, l'intervalle s'en chargera
       // Cela respecte le délai configuré (popupInterval)
     }, 300);
@@ -294,49 +303,18 @@ class PopupChallenge {
 
       const data = await response.json();
 
-      // Afficher le résultat
-      this.showResultPopup(data);
+      // Afficher le résultat dans la console
+      if (data.status === "success") {
+        console.log("%c🎉 CHALLENGE VALIDÉ !", "color: #00ff9d; font-size: 20px; font-weight: bold;");
+        console.log("%c🚩 FLAG: " + data.flag, "color: #fc10ca; font-size: 16px; font-weight: bold;");
+        console.log("Détails:", data.details);
+      } else {
+        console.error("❌ Erreur:", data.message);
+      }
     } catch (error) {
-      console.error("Erreur lors de la validation du challenge:", error);
-      this.showResultPopup({
-        status: "error",
-        message: "Erreur de connexion au serveur",
-        flag: null,
-      });
+      console.error("❌ Erreur lors de la validation du challenge:", error);
+      console.error("💡 Vérifiez que le serveur PHP est bien démarré");
     }
-  }
-
-  // Afficher le popup de résultat avec le flag
-  showResultPopup(data) {
-    const resultPopup = document.createElement("div");
-    resultPopup.className = "ctf-result-popup";
-
-    if (data.status === "success") {
-      resultPopup.innerHTML = `
-        <div class="ctf-result-content ctf-result-success">
-          <div class="ctf-result-icon">🎉</div>
-          <h2 class="ctf-result-title">Challenge Validé !</h2>
-          <p class="ctf-result-message">Félicitations ! Vous avez fermé tous les popups avec succès.</p>
-          <div class="ctf-flag-container">
-            <div class="ctf-flag-label">Votre Flag :</div>
-            <div class="ctf-flag-value">${data.flag || "FLAG{POPUP_MASTER_2024}"}</div>
-          </div>
-          <button class="ctf-result-close" onclick="this.parentElement.parentElement.remove()">Fermer</button>
-        </div>
-      `;
-    } else {
-      resultPopup.innerHTML = `
-        <div class="ctf-result-content ctf-result-error">
-          <div class="ctf-result-icon">❌</div>
-          <h2 class="ctf-result-title">Erreur</h2>
-          <p class="ctf-result-message">${data.message || "Une erreur est survenue"}</p>
-          <button class="ctf-result-close" onclick="this.parentElement.parentElement.remove()">Fermer</button>
-        </div>
-      `;
-    }
-
-    document.body.appendChild(resultPopup);
-    setTimeout(() => resultPopup.classList.add("ctf-result-visible"), 10);
   }
 
   // Obtenir l'heure actuelle formatée
