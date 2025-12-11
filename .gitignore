@@ -1,0 +1,39 @@
+# Logs
+logs/
+*.log
+
+# Fichiers temporaires
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Dépendances (si utilisées)
+node_modules/
+vendor/
+composer.lock
+package-lock.json
+
+# Configuration locale
+.env
+.env.local
+config.local.php
+
+# Fichiers sensibles
+*.key
+*.pem
+*.p12
+secrets/
+

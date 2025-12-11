@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DSIN - Dashboard Cyber Escape</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark"></div>
+          <div class="brand-text">
+            <p class="eyebrow">Université des Antilles</p>
+            <h1>DSIN</h1>
+            <p class="muted">Centre de supervision</p>
+          </div>
+        </div>
+        <ul class="nav">
+          <li class="nav-section">Surveillance</li>
+          <li class="nav-item active" data-target="overview">
+            <span class="dot dot-pink"></span>
+            Vue d'ensemble
+          </li>
+          <li class="nav-item" data-target="incidents">
+            <span class="dot dot-pink"></span>
+            Incidents
+          </li>
+          <li class="nav-item" data-target="audit">
+            <span class="dot dot-green"></span>
+            Audit & Conformité
+          </li>
+
+          <li class="nav-item" data-target="systemes">
+            <span class="dot dot-blue"></span>
+            Systèmes
+          </li>
+        </ul>
+        <div class="sidebar-footer">
+          <div class="pill pill-success">En ligne</div>
+          <div class="pill pill-warning">Mode jeu</div>
+        </div>
+      </aside>
+
+      <main class="content">
+        <header class="page-header">
+          <div>
+            <p class="eyebrow">Dashboard DSIN</p>
+            <h2 id="page-title">Vue d'ensemble</h2>
+            <p class="muted">Centre de supervision — Université des Antilles</p>
+          </div>
+          <div class="header-actions">
+            <button class="ghost">Exporter</button>
+            <button class="primary">Nouveau rapport</button>
+          </div>
+        </header>
+
+        <section class="cards" id="cards">
+          <!-- Contenu dynamique chargé par JavaScript -->
+        </section>
+      </main>
+    </div>
+
+    <!-- Scripts modulaires -->
+    <script src="js/config.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/overview.js"></script>
+    <script src="js/systemes.js"></script>
+    <script src="js/audit.js"></script>
+    <script src="js/incidents.js"></script>
+    <script src="js/challenge.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
